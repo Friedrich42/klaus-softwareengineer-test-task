@@ -1,0 +1,300 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/api.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Cipactonal"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/category/scores": {
+      "get": {
+        "summary": "Aggregated category scores over a period of time",
+        "operationId": "Cipactonal_CategoryScores",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CategoryScoresResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "timePeriod.start",
+            "description": "The start time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "timePeriod.end",
+            "description": "The end time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "Cipactonal"
+        ]
+      }
+    },
+    "/quality/score": {
+      "get": {
+        "summary": "Overal quality score",
+        "operationId": "Cipactonal_QualityScore",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/QualityScoreResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "timePeriod.start",
+            "description": "The start time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "timePeriod.end",
+            "description": "The end time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "Cipactonal"
+        ]
+      }
+    },
+    "/quality/score/change": {
+      "get": {
+        "summary": "Period over Period score change",
+        "operationId": "Cipactonal_ScoreChange",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ScoreChangeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "firstTimePeriod.start",
+            "description": "The start time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "firstTimePeriod.end",
+            "description": "The end time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "secondTimePeriod.start",
+            "description": "The start time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "secondTimePeriod.end",
+            "description": "The end time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "Cipactonal"
+        ]
+      }
+    },
+    "/ticket/scores": {
+      "get": {
+        "summary": "Aggregate scores for categories within defined period by ticket.",
+        "operationId": "Cipactonal_TicketScores",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/TicketScoresResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "timePeriod.start",
+            "description": "The start time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "timePeriod.end",
+            "description": "The end time of the period",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "Cipactonal"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CategoryScoresResponse": {
+      "type": "object",
+      "properties": {
+        "scores": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Scores"
+          }
+        }
+      }
+    },
+    "QualityScoreResponse": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ScoreChangeResponse": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Scores": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "TicketScoresResponse": {
+      "type": "object",
+      "properties": {
+        "scores": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Scores"
+          }
+        }
+      }
+    },
+    "TimePeriod": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "title": "The start time of the period"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "title": "The end time of the period"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

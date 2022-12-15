@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+option go_package = "cipactonal/pkg/http/grpc/proto";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+
+service Cipactonal {
+  // Aggregated category scores over a period of time
+  rpc CategoryScores (CategoryScoresRequest) returns (CategoryScoresResponse) {
+    option (google.api.http) = {
+      get: "/category/scores"
+    };
+  }
+  // Aggregate scores for categories within defined period by ticket.
+  rpc TicketScores (TicketScoresRequest) returns (TicketScoresResponse) {
+    option (google.api.http) = {
+      get: "/ticket/scores"
+    };
+  }
+  // Overal quality score
+  rpc QualityScore (QualityScoreRequest) returns (QualityScoreResponse) {
+    option (google.api.http) = {
+      get: "/quality/score"
+    };
+  }
+  // Period over Period score change
+  rpc ScoreChange (ScoreChangeRequest) returns (ScoreChangeResponse) {
+    option (google.api.http) = {
+      get: "/quality/score/change"
+    };
+  }
+}
+
+message CategoryScoresRequest {
+  // The time period to return the scores for
+  TimePeriod time_period = 1 [(validate.rules).message.required = true];
+}
+
+message Scores {
+  string name = 1;
+  google.protobuf.Timestamp created_at = 2;
+  int32 score = 3;
+}
+
+message CategoryScoresResponse {
+  repeated Scores scores = 1;
+}
+
+message TicketScoresRequest {
+  // The time period to return the scores for
+  TimePeriod time_period = 1 [(validate.rules).message.required = true];
+}
+
+message TicketScoresResponse {
+  repeated Scores scores = 1;
+}
+
+message QualityScoreRequest {
+  // The time period to return the score for
+  TimePeriod time_period = 1 [(validate.rules).message.required = true];
+}
+
+message QualityScoreResponse {
+  int32 score = 1;
+}
+
+message ScoreChangeRequest {
+  // The time period to return the score for
+  TimePeriod first_time_period = 1 [(validate.rules).message.required = true];
+  TimePeriod second_time_period = 2 [(validate.rules).message.required = true];
+}
+
+message ScoreChangeResponse {
+  int32 score = 1;
+}
+
+message TimePeriod {
+  // The start time of the period
+  google.protobuf.Timestamp start = 1;
+  // The end time of the period
+  google.protobuf.Timestamp end = 2;
+}

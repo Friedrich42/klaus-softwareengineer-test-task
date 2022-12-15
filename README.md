@@ -55,3 +55,12 @@ Please fork this repository and share the link to your solution with us.
 * How would you build and deploy the solution?
 
     At Klaus we make heavy use of containers and [Kubernetes](https://kubernetes.io).
+
+
+
+
+
+# Here should be a description about how to run the service and recompile proto files.
+use `buf generate` to generate the proto files
+use `go run cmd/main.go` to run
+no environment variables required for configuration
